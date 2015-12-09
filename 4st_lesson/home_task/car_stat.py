@@ -7,13 +7,14 @@ import xml.etree.ElementTree as ET
 
 request = 'http://www.nbrb.by/Services/XmlExRates.aspx'
 csv_file = 'car_stats.csv'
+oil_rest = 13.6  # from comment in last string
 
 
 def print_requested_info(file):
     prepared_data = get_data_from_csv_file(file)
     months_in_use = count_months(prepared_data)
     oil_cost_all_time = sum_of_column(prepared_data, 3)
-    charged_oil_all_time = sum_of_column(prepared_data, 2)
+    charged_oil_all_time = sum_of_column(prepared_data, 2) - oil_rest
     all_run = prepared_data[-1][1]
 
     average_spending_by_month = oil_cost_all_time / months_in_use
@@ -28,7 +29,7 @@ def print_requested_info(file):
 
 
 def prepare_data(data):
-    convert_date_to_digits(data)
+    convert_data_to_digits(data)
     exchange_currency(data)
     prepared_data = get_rid_empty_string(data)
 
@@ -45,14 +46,15 @@ def get_data_from_csv_file(file):
 
 
 def get_currency_as_xml_string(url):
-    response = urllib2.urlopen(request)
+    response = urllib2.urlopen(url)
     response_string = response.read()
 
     return response_string
 
 
-def get_exchange_rate(required_currency):
-    currency_xml_string = get_currency_as_xml_string(request)
+def get_exchange_rate(required_currency, date):
+    request_by_date = request + '?ondate=' + date
+    currency_xml_string = get_currency_as_xml_string(request_by_date)
     root = ET.fromstring(currency_xml_string)
 
     for currency in root.findall('Currency'):
@@ -61,21 +63,22 @@ def get_exchange_rate(required_currency):
             return currency.find('Rate').text
 
 
-def convert_date_to_digits(data):
+def convert_data_to_digits(data):
     for row in data:
         for index, column in enumerate(row):
             if column.isdigit():
                 row[index] = int(column)
             elif '.' in column:
-                splited_column = column.split('.')
-                if splited_column[0].isdigit():
+                splitted_column = column.split('.')
+                if splitted_column[0].isdigit():
                     row[index] = float(column)
 
 
 def exchange_currency(data):
     for row in data:
         if row[5] == 'RUR':
-            exchange_rate = float(get_exchange_rate('RUB'))
+            date = row[0]
+            exchange_rate = float(get_exchange_rate('RUB', date))
             row[4] = int(row[4] * exchange_rate)
             row[3] = int(row[3] * exchange_rate)
             row[5] = 'BYR'
