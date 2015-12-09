@@ -3,7 +3,6 @@ __author__ = 'vladimir.pekarsky'
 
 import argparse
 import smtplib
-import sys
 
 from email.message import Message
 from email.header import Header
@@ -48,15 +47,6 @@ def send_message(args):
 
 if __name__ == '__main__':
     args = parse_args()
-    # args_for_emai = {'header': args.s,
-    #                  'message': args.m,
-    #                  'smtp': args.smtp,
-    #                  'smtp_port': args.smtp_port,
-    #                  'user': args.user,
-    #                  'user_pass': args.u_pass,
-    #                  'email_from': args.e_f,
-    #                  'email_to': args.e_t,
-    #                  }
     error_email = send_message(args)
     if not error_email:
         print("Email has been successfully sent")
