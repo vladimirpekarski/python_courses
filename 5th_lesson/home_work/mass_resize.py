@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 __author__ = 'vladimir.pekarsky'
 
+import argparse
 import os
 import Image
 
-path = r'files'
 
-def resize_images_in_folder(files_dir):
-    if os.path.exists(files_dir):
-        resize_images(files_dir)
-    else:
-        print('Directory does not exist')
+def parse_args():
+    parser = argparse.ArgumentParser(description='Script to resize image files')
+    parser.add_argument('-p', '--path', help='Path to folder with files')
+    parser.add_argument('-r', '--remove_files',
+                        help='Remove files with prefix "resized_" in specified path')
+
+    return parser.parse_args()
 
 
 def resize_images(files_dir):
     for root, dirs, files in os.walk(files_dir):
-        for file in files:
-            path_to_file = os.path.join(root, file)
+        for _file in files:
+            path_to_file = os.path.join(root, _file)
             resize_image(path_to_file)
 
 
@@ -24,7 +26,7 @@ def resize_image(path_to_file):
     try:
         image = Image.open(path_to_file)
         resized_file_name = get_resized_file_name(path_to_file)
-        new_image_size = reduce_size(image.size)
+        new_image_size = image.size[0] // 2, image.size[1] // 2
         resized_image = image.resize(new_image_size)
         resized_image.save(resized_file_name, image.format)
     except IOError as e:
@@ -39,24 +41,28 @@ def get_resized_file_name(path_to_file):
     return resized_file_path
 
 
-def reduce_size(origin_sizes):
-    size_list = list(origin_sizes)
-    for index, size in enumerate(size_list):
-        size_list[index] = size // 2
-
-    return tuple(size_list)
-
-
 def remove_created_files(files_dir):
     for root, dirs, files in os.walk(files_dir):
-        for file in files:
-            if file.startswith('resized_'):
-                path_to_file = os.path.join(root, file)
+        for _file in files:
+            if _file.startswith('resized_'):
+                path_to_file = os.path.join(root, _file)
                 os.remove(path_to_file)
 
 
+if __name__ == '__main__':
+    args = parse_args()
+    if args.path:
+        if os.path.exists(args.path):
+            resize_images(args.path)
+        else:
+            print('Directory does not exist')
 
-resize_images_in_folder(path)
+        print('Files have been resized')
 
-# Delete all files with prefix 'resized_' in specified folder
-# remove_created_files(path)
+    elif args.remove_files:
+        if os.path.exists(args.remove_files):
+            remove_created_files(args.remove_files)
+        else:
+            print('Directory does not exist')
+
+        print('Files have been removed')
