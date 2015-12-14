@@ -60,7 +60,7 @@ def run_test(function, quantity_of_elements):
                                           quantity_of_elements))
     average = get_average_time(results)
     print('...Test for {}({}) has finished in {} sec'.
-          format(function.__name__, quantity_of_elements, average))
+          format(function.__name__, quantity_of_elements, sum(results)))
 
     return average
 
