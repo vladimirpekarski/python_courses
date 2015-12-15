@@ -8,7 +8,7 @@ c = 5000000
 
 list_max = [a, b, c]
 
-def find_max(_a, _b , _c):
+def find_min(_a, _b , _c):
     _min = _a
     if _min > _b:
         _min = _b
@@ -17,7 +17,7 @@ def find_max(_a, _b , _c):
 
     return _min
 
-list_max.remove(find_max(a, b, c))
+list_max.remove(find_min(a, b, c))
 
 print(sum(list_max))
 
