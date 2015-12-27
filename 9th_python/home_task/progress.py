@@ -11,6 +11,10 @@ class Progress(object):
         self.current_value = current_value
         self.target_value = target_value
 
+    def __str__(self):
+        return 'Progress name: {}; current progress: {}'.format(
+            self.name, self.current_value)
+
     def change_progress(self, received_value):
         self.current_value += received_value
         if self.current_value >= self.target_value:

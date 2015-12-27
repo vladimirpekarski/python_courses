@@ -21,11 +21,7 @@ if __name__ == '__main__':
     admin = AdminUser('admin@test.tst', 'password', 'admin')
     admin.register('password', shelve_db)
     registered_admin = admin.login('admin', 'password', shelve_db)
-    registered_admin.logout(shelve_db)
     registered_admin.bann_user(gamer2)
+    registered_admin.logout(shelve_db)
     logged_user = gamer2.login('nick', 'password', shelve_db)
-
-    valid_user = StandardGamer('some@email.com', 'password1', 'nickname')
-    valid_user.register('password1', shelve_db)
-
     shelve_db.close()
