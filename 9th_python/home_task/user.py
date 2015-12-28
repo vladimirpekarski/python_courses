@@ -49,11 +49,15 @@ class User(object):
             print('{} doesn\'t exist in db'.format(self.__class__.__name__))
 
     def logout(self, shelve_db=None):
-        print('{} {} logged out'.format(self.__class__.__name__,
-                                        self.nickname))
-        self.session.stop_session()
-        self._save(shelve_db)
-        self.session = None
+        if self.session:
+            print('{} {} logged out'.format(self.__class__.__name__,
+                                            self.nickname))
+            self.session.stop_session()
+            self._save(shelve_db)
+            self.session = None
+        else:
+            print('{} {} isn\'t logged in'.format(self.__class__.__name__,
+                                                  self.nickname))
 
     def _save(self, shelve_db=None):
         print('Save {} to db'.format(self.__class__.__name__,))
