@@ -5,11 +5,9 @@ from session import Session
 from currency import Currency
 from progress import Progress
 
-
 class User(object):
     """
     >>> user = User('test@test.test', 'pass', 'nick')
-
     >>> user.email
     'test@test.test'
     >>> user.password
@@ -17,13 +15,9 @@ class User(object):
     >>> user.nickname
     'nick'
     >>> user.session
-
     >>> user.achievements
-
     >>> user.currency
-
     >>> user.progresses
-
     """
     def __init__(self, email, password, nickname):
         self.email = email
@@ -188,7 +182,6 @@ class User(object):
         >>> os.remove(r'db/users')
         """
         return nickname in shelve_db.keys()
-
 
 if __name__ == '__main__':
     import doctest
