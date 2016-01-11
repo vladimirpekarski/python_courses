@@ -4,6 +4,9 @@ __author__ = 'vladimir.pekarsky'
 from achievement import Achievement
 
 class Progress(object):
+    EXPERIENCE_ID = 1
+    SOME_PROGRESS_ID = 2
+
     def __init__(self, progress_type, name, current_value=0,
                  target_value=100):
         self.progress_type = progress_type

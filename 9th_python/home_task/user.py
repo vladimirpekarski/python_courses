@@ -41,8 +41,8 @@ class User(object):
         User: email: test@test.test; Nickname: nick;
         """
         return '{}: email: {}; Nickname: {};'.format(self.__class__.__name__,
-                                                      self.email,
-                                                      self.nickname)
+                                                     self.email,
+                                                     self.nickname)
 
     def register(self, confirm_pass, shelve_db=None):
         """
@@ -66,11 +66,11 @@ class User(object):
             print('Confirmed password isn\'t correct')
         else:
             print('{} successfully registered'.format(self.__class__.__name__))
-            self.currency = {1: Currency(1, 'Gold', value=0),
-                             2: Currency(2, 'Silver', value=50),
-                             3: Currency(3, 'Bronze'), }
-            self.progresses = {1: Progress(1, 'Experience'),
-                               2: Progress(2, 'Some_Progress2'), }
+            self.currency = {Currency.GOLD_ID: Currency(Currency.GOLD_ID, 'Gold', value=0),
+                             Currency.SILVER_ID: Currency(Currency.SILVER_ID, 'Silver', value=50),
+                             Currency.BRONZE_ID: Currency(Currency.BRONZE_ID, 'Bronze'), }
+            self.progresses = {Progress.EXPERIENCE_ID: Progress(Progress.EXPERIENCE_ID, 'Experience'),
+                               Progress.SOME_PROGRESS_ID: Progress(Progress.SOME_PROGRESS_ID, 'Some_Progress2'), }
             self.achievements = {}
             self._save(shelve_db)
 
@@ -145,6 +145,7 @@ class User(object):
         """
         >>> import shelve
         >>> import os
+        >>> from progress import Progress
         >>> shelve_db = shelve.open(r'db/users')
         >>> user = User('test@test.test', 'pass', 'nick')
         >>> user.register('pass', shelve_db)
@@ -152,13 +153,13 @@ class User(object):
         Save User to db
         >>> logged_user = user.login('nick', 'pass', shelve_db) # doctest: +ELLIPSIS
         User nick logged in
-        >>> logged_user.do_something(1, 30)
-        >>> logged_user.progresses[1].current_value
+        >>> logged_user.do_something(Progress.EXPERIENCE_ID, 30)
+        >>> logged_user.progresses[Progress.EXPERIENCE_ID].current_value
         30
         >>> logged_user.logout(shelve_db)
         User nick logged out
         Save User to db
-        >>> logged_user.do_something(1, 30)
+        >>> logged_user.do_something(Progress.EXPERIENCE_ID, 30)
         User nick isn't logged in
         >>> os.remove(r'db/users')
         """
