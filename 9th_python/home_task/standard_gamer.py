@@ -4,6 +4,13 @@ __author__ = 'vladimir.pekarsky'
 from user import User
 
 class StandardGamer(User):
+    """
+    >>> gamer = StandardGamer('some@email.com', 'pass', 'nick')
+    >>> gamer.banned
+    False
+    >>> gamer.desc
+    'Standard User'
+    """
     def __init__(self, email, password, nickname, desc='Standard User',
                  banned=False):
         super(StandardGamer, self).__init__(email, password, nickname)
@@ -11,9 +18,20 @@ class StandardGamer(User):
         self.desc = desc
 
     def __str__(self):
+        """
+        >>> gamer = StandardGamer('some@email.com', 'pass', 'nick')
+        >>> print(gamer)
+        StandardGamer: email: some@email.com; Nickname: nick;description: Standard User
+        """
         return super(StandardGamer, self).__str__() + 'description: {}'.format(self.desc)
 
     def login(self, nickname, password, _shelve_db=None):
+        """
+        >>> gamer = StandardGamer('some@email.com', 'pass', 'nick')
+        >>> gamer.banned = True
+        >>> gamer.login('nick', 'pass')
+        nick is banned
+        """
         if not self.banned:
             return super(StandardGamer, self).login(nickname, password,
                                                     _shelve_db)
@@ -22,28 +40,5 @@ class StandardGamer(User):
 
 
 if __name__ == '__main__':
-    import shelve
-    import time
-
-    def print_entities(db):
-        for user in db:
-            print(user)
-
-    shelve_db = shelve.open(r'db/users')
-
-    valid_user = StandardGamer('some@email.com', 'password1', 'nickname')
-    valid_user.register('password1', shelve_db)
-    logged_user = valid_user.login('nickname', 'password1', shelve_db)
-    logged_user.do_something(1, 30)
-    logged_user.do_something(1, 30)
-    logged_user.do_something(1, 30)
-    logged_user.do_something(1, 30)
-    time.sleep(10)
-    logged_user.logout(shelve_db)
-    user_from_db = shelve_db['nickname']
-    print(user_from_db)
-    print(user_from_db.session)
-    print(user_from_db.achievements)
-    print(user_from_db.progresses[1])
-
-    shelve_db.close()
+    import doctest
+    doctest.testmod()
