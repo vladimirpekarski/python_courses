@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'vladimir.pekarsky'
 
-import os
 from session import Session
 from currency import Currency
 from progress import Progress
