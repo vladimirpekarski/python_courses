@@ -165,6 +165,52 @@ class User(object):
             print('{} {} isn\'t logged in'.format(self.__class__.__name__,
                                                   self.nickname))
 
+    def give_money(self, money_type, value):
+        """
+        >>> import shelve
+        >>> import os
+        >>> import currency
+        >>> shelve_db = shelve.open(r'db/users')
+        >>> user = User('test@test.test', 'pass', 'nick')
+        >>> user.register('pass', shelve_db)
+        User successfully registered
+        Save User to db
+        >>> logged_user = user.login('nick', 'pass', shelve_db) # doctest: +ELLIPSIS
+        User nick logged in
+        >>> logged_user.give_money(currency.Currency.BRONZE_ID, 50)
+        >>> logged_user.currency[currency.Currency.BRONZE_ID].value
+        50
+        >>> os.remove(r'db/users')
+        """
+        if self.session:
+            self.currency[money_type].change_money(-value)
+        else:
+            print('{} {} isn\'t logged in'.format(self.__class__.__name__,
+                                                  self.nickname))
+
+    def take_money(self, money_type, value):
+        """
+        >>> import shelve
+        >>> import os
+        >>> import currency
+        >>> shelve_db = shelve.open(r'db/users')
+        >>> user = User('test@test.test', 'pass', 'nick')
+        >>> user.register('pass', shelve_db)
+        User successfully registered
+        Save User to db
+        >>> logged_user = user.login('nick', 'pass', shelve_db) # doctest: +ELLIPSIS
+        User nick logged in
+        >>> logged_user.take_money(currency.Currency.BRONZE_ID, 50)
+        >>> logged_user.currency[currency.Currency.BRONZE_ID].value
+        150
+        >>> os.remove(r'db/users')
+        """
+        if self.session:
+            self.currency[money_type].change_money(value)
+        else:
+            print('{} {} isn\'t logged in'.format(self.__class__.__name__,
+                                                  self.nickname))
+
     @staticmethod
     def _check_unique_nickname(nickname, shelve_db=None):
         """

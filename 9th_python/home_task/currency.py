@@ -20,6 +20,9 @@ class Currency(object):
         self.name = name
         self.value = value
 
+    def change_money(self, delta):
+        self.value += delta
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
