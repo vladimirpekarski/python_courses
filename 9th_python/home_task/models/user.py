@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'vladimir.pekarsky'
 
+import os
 from session import Session
 from currency import Currency
 from progress import Progress
@@ -227,6 +228,7 @@ class User(object):
         True
         >>> os.remove(r'db/users')
         """
+
         return nickname in shelve_db.keys()
 
 if __name__ == '__main__':
