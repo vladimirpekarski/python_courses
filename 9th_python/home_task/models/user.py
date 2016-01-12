@@ -15,18 +15,23 @@ class User(object):
     >>> user.nickname
     'nick'
     >>> user.session
+    []
     >>> user.achievements
     >>> user.currency
     >>> user.progresses
+    >>> user.desc
+    >>> user.banned
     """
     def __init__(self, email, password, nickname):
         self.email = email
         self.password = password
         self.nickname = nickname
-        self.session = None
+        self.session = []
         self.currency = None
         self.progresses = None
         self.achievements = None
+        self.banned = None
+        self.desc = None
 
     def __str__(self):
         """
@@ -88,7 +93,7 @@ class User(object):
             print('{} {} logged in'.format(self.__class__.__name__,
                                            self.nickname))
             logged_user = shelve_db[nickname]
-            logged_user.session = Session()
+            logged_user.session.append(Session())
 
             return logged_user
         else:
@@ -115,9 +120,9 @@ class User(object):
         if self.session:
             print('{} {} logged out'.format(self.__class__.__name__,
                                             self.nickname))
-            self.session.stop_session()
+            self.session[-1].stop_session()
             self._save(shelve_db)
-            self.session = None
+            self.session = []
         else:
             print('{} {} isn\'t logged in'.format(self.__class__.__name__,
                                                   self.nickname))

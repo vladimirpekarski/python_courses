@@ -27,6 +27,9 @@ class Session(object):
         """
         return 'Last session time: {}'.format(self.session_time)
 
+    def __repr__(self):
+        return 'Last session time: {}'.format(self.session_time)
+
     def stop_session(self):
         self.end_time = datetime.now()
         self._calculate_session_time()
