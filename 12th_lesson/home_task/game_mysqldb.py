@@ -9,7 +9,7 @@ import models.moderator_user as moderator
 import models.progress as progress
 import models.currency as curr
 
-con = mdb.connect('localhost', 'root', 'root', 'game')
+con = mdb.connect('localhost', 'root', 'root', 'my_game_3')
 cur = con.cursor()
 
 gamer = st_gamer.StandardGamer('email1@test.tst', 'password', 'nick',
