@@ -10,8 +10,8 @@ def bubble_sort(some_list):
             if some_list[j] > some_list[j + 1]:
                 some_list[j], some_list[j + 1] = some_list[j + 1], some_list[j]
 
-# 0 ** 2 = 0
-# 1 ** 2 = 1
+# 2 ** 0 = 1
+# 2 ** 1 = 2
 # 2 ** 2 = 4
 # 2 ** 3 = 8
 # 2 ** 4 = 16
