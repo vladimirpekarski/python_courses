@@ -1,0 +1,204 @@
+Linux:
+
+grep -r -c text
+wget --spider (check) -i(file)
+man (wget)
+=====
+ssh-keygem (create key)
+ssh-add (inform system about key)
+cat ~/.id_rsa.pub (review public key)
+nano ~/.ssh/authorised_keys (edit auth keys)
+
+scp -P port login@server:path1 path (from server to client) 
+scp -P port path1 login@server:path2 (from client to server)
+
+sudo apt-get install progremm
+sudo apt-get remove programm
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install --only-upgrade programm
+
+less - редактор??
+
+jobs
+bg %pid
+fg %pid
+ps - process
+top - all process
+top -u <user_name> - user's processes
+kill -9
+
+free -g -- ram
+nproc  -- count of core
+lscpu  -- detailed info about processor
+
+Ctrl + Shift + T = new tab
+Alt + <number> = move to tab
+Ctrl + Shift + W = close
+tmux
+Ctrl + B
+Ctrl + B + C
+Ctrl + B + <number>
+Ctrl + B + N / Ctrl + B + P === netx/previous
+Ctrl + B + X / exit
+Ctrl + B + D == временно выйти из tmux
+tmux attach / tmux a == back to tmux
+tmux list-sessions == list of processess
+Ctrl + B + PgUp == history
+PgUp, PgDown
+Esc, Ctrl + C == exit
+
+
+vim
+vim file
+:q
+:help
+vimtutor
+h, j, k, l == move
+by words:
+w, W - begin next word
+e, E - end of next word
+b, B - begin of previous
+0,^,$ = begin string, first non-space symbol, end of string
+gg - begin of file
+G - end of file
+:21<Enter> - move to string 21
+<Ctrl+D>, <Ctrl+U> - up/down N string, N usually half-screen
+DELETE:
+x - delete under cursor
+X - delete before cursoe
+de - delete word
+d$ - delete to the end of string
+d5w - delete 5 words
+dd - delete row
+IMSERT
+i - insert mode
+a - move cursore to right and enter to insert mode
+o - empty string to edit
+O - empty string to edit on top
+COPY:
+y<count><хов> - copy
+yy - copy string
+INSERT:
+p - insert before
+P - inser after
+SEARCH TEXT
+/<text> forward
+?<text> back
+n - Next N - previous
+:%s/<what we are looking for>/<new value>/<flags>
+<glags>: g - many replaces, c - confirm
+USEFULL COMMAND:
+u - undo last move
+<Ctrl+r> - back undoded move
+SAVE:
+:w - save changes
+:wq - save and exit
+:q! - exit without save
+:w<file> - save to file
+
+bash:
+if [[ ]]
+then
+# bla
+else  
+# bla
+fi
+(elif then)
+
+-z <string> # empty string
+-n <string> # string isn't empty
+<string> == <string2> # srings are equal
+<string> != <string2> # strings aren't equal
+digits:
+-eq (==)# equal
+-ne (!=)# not eqqual
+-lt (<) # less
+-le     # less or equal
+-gt     # greater
+-ge     # greater or equal
+files:
+-e <path> # path exists
+-f <path> # it's file
+-d <path> # derictory
+-s <path> # file size more than 0
+-x <path> # file executable
+logical:
+! # negative
+$$ # AND
+|| # OR
+
+case <> in
+val 1)
+# asd 
+;;
+val 2)
+$ asdasd
+;;
+*)
+# asdas 
+# asd ad
+esac
+
+for <variable> in list
+do
+# ad
+# a
+done
+break
+continue
+
+while
+do
+# asd
+done
+read <variable>
+
+let "c = 1 + 1"
+let "c = a + b"
++,-,/,*
+% - ост от деления
+** - степень
+
+extension
+variable=`programma`
+
+Example:
+a=`echo "test"`
+files=`ls ~`
+$? == code
+
+funct ()
+{
+}
+
+find -iname
+find -path
+find -size 44k
+find -maxdeptp
+find -mindepth
+
+grep -l
+grep -L
+grep -n <number> where
+grep -E <reg>
+
+sed
+
+wc - word count
+wc -l
+wc -w
+wc -c
+
+diff file.txt file.txt | less
+diff -qr dir1/ dir2/
+
+du -h ~/
+du --max-depth 1 -h
+df 
+
+head -n 10 file.txt
+tail -n 50 file.txt | less
+  
+
+ 
